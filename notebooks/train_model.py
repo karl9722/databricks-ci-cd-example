@@ -32,7 +32,8 @@ def main():
     model, accuracy, X_train = train_model()
 
     mlflow.set_registry_uri("databricks-uc")
-
+    mlflow.set_experiment("/Shared/iris-ci-cd-experiment")
+    
     signature = infer_signature(
         X_train, model.predict(X_train)
     )
