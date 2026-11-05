@@ -27,3 +27,18 @@ jobs:
       - name: Executer les tests
         run: |
           python -m pytest tests/ -v
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Installer Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Declencher le job Databricks
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+        run: |
+          databricks jobs run-now 1062094326477269
